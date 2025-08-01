@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>星辰储能智享平台 - 分享动态</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 配置Tailwind自定义样式 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            secondary: '#10b981',
+            neutral: '#94a3b8',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 页面容器 -->
+  <div class="max-w-full mx-auto px-3 sm:px-4 py-4">
+    <!-- 领导分享列表页 -->
+    <div class="my-6">
+      <div class="flex items-center mb-6">
+        <button onclick="goToHomePage()" class="text-gray-600 hover:text-primary mr-3">
+          <i class="fa fa-arrow-left text-base"></i> 返回首页
+        </button>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-800">分享动态</h2>
+        <span class="ml-2 text-sm text-gray-500">(按时间倒序排列)</span>
+      </div>
+
+      <!-- 分享列表网格（手机端1列，平板2列） -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="sharesGrid">
+        <!-- 分享内容将通过JS动态生成 -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    const leaderSharesData = [
+      {
+        title: "国家能源局：2025上半年新型储能装机94.91GW/222GWh，较2024年底增长约29%",
+        date: "2025-07-31",
+        summary: "全球液流电池储能",
+        url: "https://mp.weixin.qq.com/s/FYCutItZ9Ma0mcbTwcAMdA"
+      },
+      {
+        title: "星辰新能陈培毅：储能要反“无效内卷”，全钒液流比锂电更安全 ｜ 对话能源大咖",
+        date: "2025-07-31",
+        summary: "华夏时报网",
+        url: "https://m.chinatimes.net.cn/article/146721.html"
+      },
+      {
+        title: "采购公告｜120kW/480kWh，中讯院新型储能（全钒液流电池储能）系统研发服务项目询比采购公告",
+        date: "2025-07-30",
+        summary: "全球液流电池储能",
+        url: "https://mp.weixin.qq.com/s/pS5rIz4VpsbbtYlx9YNaIg"
+      },
+      {
+        title: "中标候选人｜辽宁阜新彰武县65MW/260MWh全钒液流独立储能电站项目工程总承包中标候选人公示",
+        date: "2025-07-30",
+        summary: "全球液流电池",
+        url: "https://mp.weixin.qq.com/s/1_R-eVdejbM9bzi0wjaaSQ"
+      },
+      {
+        title: "内蒙古2025年第三批独立储能：3.2GWh，蒙能获取，补偿按要求执行",
+        date: "2025-07-30",
+        summary: "储能与电力市场",
+        url: "https://mp.weixin.qq.com/s/GUSH6OQEwap2EpG5UGyRyg"
+      },
+      {
+        title: "永仁全钒液流储能项目获9亿贷款！云南政策、金融、市场三管齐下支持钒电池发展",
+        date: "2025-07-30",
+        summary: "亚化液流储能",
+        url: "https://mp.weixin.qq.com/s/UXSUqC01KDpnBouEtd_HlA"
+      },
+       {
+        title: "清晰的盈利模式助推内蒙古独立储能发展，5批项目超半数实质推进",
+        date: "2025-07-24",
+        summary: "储能与电力市场",
+        url: "https://www.toutiao.com/article/7530539233375814183/?share_uid=MS4wLjABAAAA4D5T1BJbTnX-SBMON0jrtZlEkgyRLHgrE2agKRRvkqw&upstream_biz=client_share&category_new=__all__&timestamp=1753738196&app=news_article&share_did=MS4wLjACAAAA8j_Q_SDin_GGTyG3PuoKg3tt0zhEEgFCApYQPjfC-3M&share_token=ba05939e-ae16-4fd2-a569-5cad1ce48673&source=m_redirect&wid=1754028660414"
+      },
+       {
+        title: "总投资25.85亿！洛阳市新安县将建设100MW/600MWh全钒液流+200MW/400MWh磷酸铁锂电池光储充换一体化项目",
+        date: "2025-07-24",
+        summary: "全球液流电池储能",
+        url: "https://mp.weixin.qq.com/s/4PGXaFVLkzgCQvqNTvnKiw"
+      },
+       {
+        title: "同一220kV供电区不超过1座，优选建设成熟度高项目！广东2025第二批储能电站计划开启",
+        date: "2025-07-20",
+        summary: "中关村储能产业技术联盟",
+        url: "https://mp.weixin.qq.com/s/K4pELe13k5hndBOq3KYskg"
+      },
+      {
+        title: "云南省能源局：下一步集中共享储能项目鼓励以全钒液流、压缩空气储能等长时储能为主",
+        date: "2025-07-16",
+        summary: "全球液流电池储能",
+        url: "https://mp.weixin.qq.com/s/OkMcpHF1-I0QvYlrNHcm7g"
+      },
+      {
+        title: "四川2025新型储能项目清单：3.02GW/8.24GWh，四川发展领衔",
+        date: "2025-07-11",
+        summary: "储能与电力市场",
+        url: "https://mp.weixin.qq.com/s/tc8Mej_z5wzQOnWRtut7NA"
+      },
+      {
+        title: "新疆辅助服务：调峰上限0.262元/kWh，独立储能优先出清，调频上限0.015元/kW",
+        date: "2025-07-11",
+        summary: "储能与电力市场",
+        url: "https://mp.weixin.qq.com/s/wbbXb7hLlWv6uIzZHewKmw"
+      },
+       {
+        title: "招标｜【新疆华电哈密十三间房全钒液流储能系统EPC工程勘察】询比采购公告",
+        date: "2025-07-10",
+        summary: "全球液流电池储能",
+        url: "https://mp.weixin.qq.com/s/1AZfqsX2fIqrJMqq-YpDsA"
+      },
+       {
+        title: "招标｜彰武县65MW/260MWh全钒液流独立储能电站项目工程总承包招标公告",
+        date: "2025-07-09",
+        summary: "全球液流电池储能",
+        url: "https://mp.weixin.qq.com/s/bGGAVkvOsW0208aP_ZASbw"
+      },
+       {
+        title: "永仁300MW/1200MWh全钒液流储能电站等项目入选云南省2025年度省级重大项目清单和“重中之重”项目清单",
+        date: "2025-04-15",
+        summary: "钒电池",
+        url: "https://mp.weixin.qq.com/s/ITjL0_1Euj6OGdOgHzAZSA"
+      },
+       {
+        title: "云南共享储能项目收益分析：丘北独立储能电站预计年入1.05亿",
+        date: "2025-03-16",
+        summary: "野生养老",
+        url: "https://mp.weixin.qq.com/s/ESLQABaqUdTNM3fvVF7XIA"
+      },
+       {
+        title: "寰泰能源哈萨克斯坦MQ项目银团融资成功落地",
+        date: "2025-07-03",
+        summary: "寰泰能源",
+        url: "https://mp.weixin.qq.com/s/MSjwCAz13EsnnC3pH4h2eA"
+      }
+
+    ];
+
+    // 生成分享列表
+    function renderSharesList() {
+      const grid = document.getElementById('sharesGrid');
+      grid.innerHTML = '';
+
+      leaderSharesData.forEach(share => {
+        const card = document.createElement('div');
+        card.className = 'bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col h-full';
+        card.innerHTML = `
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-medium text-gray-800 line-clamp-1">${share.title}</h3>
+            <span class="text-xs text-gray-500">${share.date}</span>
+          </div>
+          <p class="text-gray-600 text-sm mb-3 flex-grow">${share.summary}</p>
+          <div class="text-right">
+            <span class="text-primary text-sm font-medium">点击查看 →</span>
+          </div>
+        `;
+        // 点击跳转至对应链接
+        card.onclick = () => window.open(share.url, '_blank');
+        grid.appendChild(card);
+      });
+    }
+
+    // 跳转至首页
+    function goToHomePage() {
+      window.location.href = 'index.html';
+    }
+
+    // 页面加载时渲染列表
+    window.onload = function() {
+      renderSharesList();
+    }
+  </script>
+</body>
+</html>
