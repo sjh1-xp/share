@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>星辰储能智享平台 - 省份详情</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- 配置Tailwind自定义样式 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <!-- 页面容器 -->
+  <div class="max-w-full mx-auto px-3 sm:px-4 py-4">
+    <!-- 省份详情页 -->
+    <div class="my-6">
+      <div class="flex items-center mb-4">
+        <button id="backToListBtn" class="text-gray-600 hover:text-primary mr-3">
+          <i class="fa fa-arrow-left text-base"></i> 返回列表
+        </button>
+        <h2 id="provinceName" class="text-xl sm:text-2xl font-bold text-gray-800">甘肃</h2>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 mt-5">
+        <button id="policyBtn" class="bg-white border border-gray-200 rounded-xl p-5 text-left hover:shadow-md transition-shadow">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-2">政策分析类</h3>
+          <p class="text-gray-600 text-sm">点击查看该省份最新储能政策文件、官方规划及配套措施</p>
+        </button>
+
+        <button id="analysisBtn" class="bg-white border border-gray-200 rounded-xl p-5 text-left hover:shadow-md transition-shadow">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-2">行业分析类</h3>
+          <p class="text-gray-600 text-sm">查看专业机构对该省份储能产业的收益模式、市场趋势及投资建议</p>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 获取URL参数中的省份信息
+    function getProvinceInfoFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: decodeURIComponent(params.get('name') || ''),
+        policyUrl: decodeURIComponent(params.get('policyUrl') || ''),
+        analysisUrl: decodeURIComponent(params.get('analysisUrl') || ''),
+        level: params.get('level') || 'A'
+      };
+    }
+
+    // 页面加载时初始化
+    window.onload = function() {
+      const province = getProvinceInfoFromUrl();
+
+      // 设置省份名称
+      document.getElementById('provinceName').textContent = province.name;
+
+      // 绑定政策按钮点击事件
+      document.getElementById('policyBtn').onclick = () => {
+        if (province.policyUrl) {
+          window.open(province.policyUrl, '_blank');
+        }
+      };
+
+      // 绑定分析按钮点击事件
+      document.getElementById('analysisBtn').onclick = () => {
+        if (province.analysisUrl) {
+          window.open(province.analysisUrl, '_blank');
+        }
+      };
+
+      // 绑定返回列表按钮点击事件
+      document.getElementById('backToListBtn').onclick = () => {
+        window.location.href = `province-list.html?level=${province.level}`;
+      };
+    }
+  </script>
+</body>
+</html>
