@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>星辰储能智享平台 - 首页</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 配置Tailwind自定义样式 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6', // 科技蓝主色
+            secondary: '#10b981', // B级绿色
+            neutral: '#94a3b8', // C级灰色
+            dark: '#0f172a', // 轮播图背景
+          },
+          boxShadow: {
+            'card': '0 4px 12px rgba(0,0,0,0.08)',
+            'card-hover': '0 6px 16px rgba(0,0,0,0.12)',
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+      .gradient-overlay {
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      }
+      .modal-backdrop {
+        backdrop-filter: blur(3px);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 页面容器 -->
+  <div class="max-w-full mx-auto px-3 sm:px-4">
+    <!-- 1. 轮播图模块 -->
+    <div class="bg-dark text-white py-3 my-4 rounded-xl overflow-hidden">
+      <div id="carousel" class="relative h-[180px] sm:h-[220px] md:h-[300px]">
+        <!-- 轮播项 -->
+        <div class="carousel-item absolute inset-0 opacity-100 transition-opacity duration-1000">
+          <img src="https://30716843.s21i.faiusr.com/3/ABUIABADGAAgqKGEvgYogKmdowUwgAY4sAM.gif.webp" alt="储能政策动态" class="w-full h-full object-cover rounded-xl">
+          <div class="absolute bottom-0 left-0 right-0 p-4 gradient-overlay">
+            <p class="text-base sm:text-lg md:text-xl font-medium text-shadow">2025年新型储能政策密集出台，全国装机目标突破50GW</p>
+          </div>
+        </div>
+        <div class="carousel-item absolute inset-0 opacity-0 transition-opacity duration-1000">
+          <img src="https://30716843.s21i.faiusr.com/3/ABUIABADGAAgvqGEvgYolt6R2AUwgA84uAg.gif.webp" alt="优先推荐区域" class="w-full h-full object-cover rounded-xl">
+          <div class="absolute bottom-0 left-0 right-0 p-4 gradient-overlay">
+            <p class="text-base sm:text-lg md:text-xl font-medium text-shadow">甘肃、广东等7省被列为储能投资优先推荐区域</p>
+          </div>
+        </div>
+        <div class="carousel-item absolute inset-0 opacity-0 transition-opacity duration-1000">
+          <img src="https://30716843.s21i.faiusr.com/3/ABUIABADGAAg7qGEvgYo6JnD6AMwgAY4sAM.gif.webp" alt="共享储能模式" class="w-full h-full object-cover rounded-xl">
+          <div class="absolute bottom-0 left-0 right-0 p-4 gradient-overlay">
+            <p class="text-base sm:text-lg md:text-xl font-medium text-shadow">独立共享储能模式成为电网侧主流发展方向</p>
+          </div>
+        </div>
+        <!-- 轮播指示器 -->
+        <div class="absolute bottom-3 right-3 flex space-x-2">
+          <button class="carousel-indicator w-2.5 h-2.5 rounded-full bg-white opacity-100" data-index="0"></button>
+          <button class="carousel-indicator w-2.5 h-2.5 rounded-full bg-white opacity-50" data-index="1"></button>
+          <button class="carousel-indicator w-2.5 h-2.5 rounded-full bg-white opacity-50" data-index="2"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 投资关注等级模块 -->
+    <div class="my-6">
+      <h2 class="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-5">
+        投资关注等级
+        <div class="w-16 h-1 bg-gradient-to-r from-primary to-blue-400 mx-auto mt-2 rounded-full"></div>
+      </h2>
+      <!-- 等级卡片网格 -->
+      <div class="grid grid-cols-1 gap-4">
+        <!-- A级卡片 -->
+        <div class="bg-white rounded-xl shadow-card p-5 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="goToProvinceList('A')">
+          <div class="flex items-center mb-3">
+            <span class="bg-gradient-to-r from-primary to-blue-400 text-white px-3 py-1 rounded-full text-base font-bold mr-2">A级</span>
+            <span class="text-gray-600 text-sm">优先推荐</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">甘肃</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">广东</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">河北</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">宁夏</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">内蒙古</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">山西</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">江苏</span>
+          </div>
+          <div class="text-right text-primary font-medium text-sm">点击查看详情 →</div>
+        </div>
+        <!-- B级卡片 -->
+        <div class="bg-white rounded-xl shadow-card p-5 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="goToProvinceList('B')">
+          <div class="flex items-center mb-3">
+            <span class="bg-gradient-to-r from-secondary to-emerald-400 text-white px-3 py-1 rounded-full text-base font-bold mr-2">B级</span>
+            <span class="text-gray-600 text-sm">重点关注</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">新疆</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">安徽</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">浙江</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">陕西</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">河南</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">山东</span>
+          </div>
+          <div class="text-right text-secondary font-medium text-sm">点击查看详情 →</div>
+        </div>
+        <!-- C级卡片 -->
+        <div class="bg-white rounded-xl shadow-card p-5 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="goToProvinceList('C')">
+          <div class="flex items-center mb-3">
+            <span class="bg-gradient-to-r from-neutral to-gray-400 text-white px-3 py-1 rounded-full text-base font-bold mr-2">C级</span>
+            <span class="text-gray-600 text-sm">持续关注</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">北京</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">上海</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">四川</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">天津</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">重庆</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">吉林</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">辽宁</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">黑龙江</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">青海</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">福建</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">湖北</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">湖南</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">海南</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">广西</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">西藏</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">香港</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">澳门</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">台湾</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">江西</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">贵州</span>
+            <span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs">云南</span>
+          </div>
+          <div class="text-right text-neutral font-medium text-sm">点击查看详情 →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 领导分享动态模块（与省级板块风格一致） -->
+    <div class="my-6">
+      <h2 class="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-5">
+        分享动态
+        <div class="w-16 h-1 bg-gradient-to-r from-primary to-blue-400 mx-auto mt-2 rounded-full"></div>
+      </h2>
+      <!-- 分享卡片（点击跳转至列表页） -->
+      <div class="bg-white rounded-xl shadow-card p-5 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="goToLeaderShares()">
+        <div class="flex items-center mb-3">
+          <span class="bg-gradient-to-r from-primary to-blue-400 text-white px-3 py-1 rounded-full text-base font-bold mr-2">最新分享</span>
+          <span class="text-gray-600 text-sm">按时间顺序排列</span>
+        </div>
+        <!-- 展示3条最新分享作为预览 -->
+        <div class="space-y-3 mb-4">
+          <div class="flex items-center justify-between p-2 border-b border-gray-100">
+            <span class="text-gray-800 text-sm">国家能源局：2025上半年新型储能装机94.91GW/222GWh，较2024年底增长约29%</span>
+            <span class="text-gray-500 text-xs">2025-07-31</span>
+          </div>
+          <div class="flex items-center justify-between p-2 border-b border-gray-100">
+            <span class="text-gray-800 text-sm">星辰新能陈培毅：储能要反“无效内卷”，全钒液流比锂电更安全 ｜ 对话能源大咖</span>
+            <span class="text-gray-500 text-xs">2025-07-31</span>
+          </div>
+          <div class="flex items-center justify-between p-2">
+            <span class="text-gray-800 text-sm">采购公告｜120kW/480kWh，中讯院新型储能（全钒液流电池储能）系统研发服务项目询比采购公告</span>
+            <span class="text-gray-500 text-xs">2025-07-30</span>
+          </div>
+        </div>
+        <div class="text-right text-primary font-medium text-sm">查看全部分享 →</div>
+      </div>
+    </div>
+
+    <!-- 4. 联系我们按钮 -->
+    <div class="my-8 text-center">
+      <button id="contactBtn" class="bg-primary hover:bg-blue-600 text-white font-medium py-3 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+        <i class="fa fa-phone mr-2"></i>联系我们
+      </button>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="text-center mt-10 pt-5 border-t border-gray-200 text-gray-600 text-sm">
+      <p>地址：常州星辰新能源有限公司（武进区武进高新区西湖路 150 号）</p>
+      <p>©2025 浙江星辰新能科技有限公司 版权所有</p>
+      <p>浙ICP备2025152067号-1</p>
+    </footer>
+  </div>
+
+  <!-- 联系我们模态框 -->
+  <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 transform transition-all">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold text-gray-800">联系我们</h3>
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+      </div>
+      <div class="space-y-4 text-gray-700">
+        <div class="flex items-start">
+          <i class="fa fa-map-marker text-primary mt-1 mr-3"></i>
+          <p>常州星辰新能源有限公司：江苏省常州市武进区武进高新区西湖路150号</p>
+        </div>
+
+        <div class="flex items-center">
+          <i class="fa fa-envelope text-primary mr-3"></i>
+          <p>contact媒体：media@sne.tech</p>
+        </div>
+        <div class="flex items-center">
+          <i class="fa fa-envelope text-primary mr-3"></i>
+          <p>contact 招聘：hr@sne.tech</p>
+        </div>
+        <div class="flex items-center">
+          <i class="fa fa-envelope text-primary mr-3"></i>
+          <p>contact 商务:  sales@sne.tech</p>
+        </div>
+        <div class="flex items-center">
+          <i class="fa fa-clock-o text-primary mr-3"></i>
+          <p>工作日 8:30-17:30</p>
+        </div>
+      </div>
+      <div class="mt-6">
+        <button id="confirmContact" class="w-full bg-primary hover:bg-blue-600 text-white py-2 rounded-lg transition-colors">
+          确认
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 轮播图逻辑
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+    const indicators = document.querySelectorAll('.carousel-indicator');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? '1' : '0';
+      });
+      indicators.forEach((ind, i) => {
+        ind.style.opacity = i === index ? '1' : '0.5';
+      });
+      currentSlide = index;
+    }
+
+    // 自动轮播
+    setInterval(() => {
+      let next = (currentSlide + 1) % slides.length;
+      showSlide(next);
+    }, 5000);
+
+    // 点击指示器切换轮播
+    indicators.forEach(ind => {
+      ind.addEventListener('click', () => {
+        showSlide(parseInt(ind.dataset.index));
+      });
+    });
+
+    // 跳转至省份列表页
+    function goToProvinceList(level) {
+      window.location.href = `province-list.html?level=${level}`;
+    }
+
+    // 跳转至领导分享列表页
+    function goToLeaderShares() {
+      window.location.href = 'leader-shares.html';
+    }
+
+    // 联系我们模态框控制
+    const contactModal = document.getElementById('contactModal');
+    const contactBtn = document.getElementById('contactBtn');
+    const closeModal = document.getElementById('closeModal');
+    const confirmContact = document.getElementById('confirmContact');
+
+    function openModal() {
+      contactModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModalFunc() {
+      contactModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    contactBtn.addEventListener('click', openModal);
+    closeModal.addEventListener('click', closeModalFunc);
+    confirmContact.addEventListener('click', closeModalFunc);
+    contactModal.addEventListener('click', (e) => {
+      if (e.target === contactModal) closeModalFunc();
+    });
+  </script>
+</body>
+</html>
