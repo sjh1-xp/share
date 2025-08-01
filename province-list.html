@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>星辰储能智享平台 - 省份列表</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 配置Tailwind自定义样式 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            secondary: '#10b981',
+            neutral: '#94a3b8',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 页面容器 -->
+  <div class="max-w-full mx-auto px-3 sm:px-4 py-4">
+    <!-- 省份列表页 -->
+    <div class="my-6">
+      <div class="flex items-center mb-4">
+        <button onclick="goToHomePage()" class="text-gray-600 hover:text-primary mr-3">
+          <i class="fa fa-arrow-left text-base"></i> 返回
+        </button>
+        <h2 id="provinceListTitle" class="text-xl sm:text-2xl font-bold text-gray-800">A级（优先推荐）省份</h2>
+      </div>
+      <!-- 省份网格 - 手机端2列布局 -->
+      <div id="provinceGrid" class="grid grid-cols-2 gap-3">
+        <!-- 省份按钮将通过JS动态生成 -->
+      </div>
+    </div>
+  </div>
+  <script>
+    // 省份数据
+    const provinceData = {
+      A: [
+        { name: "甘肃", policyUrl: "https://mp.weixin.qq.com/s/2pahCkw0AvYy6EcDZT2O4A", analysisUrl: "https://mp.weixin.qq.com/s/Rt0r41ocaap2GRyTJTXZxA" },
+        { name: "广东", policyUrl: "https://news.bjx.com.cn/html/20250721/1451947.shtml", analysisUrl: "https://mp.weixin.qq.com/s/vT-JGmVIjMRY1VBXWHDvdQ" },
+        { name: "河北", policyUrl: "https://mp.weixin.qq.com/s/k3ECBj07bhxEl7-Wu1InfQ", analysisUrl: "https://mp.weixin.qq.com/s/qjC96hvdBqzJuahuBtAwPg" },
+        { name: "宁夏", policyUrl: "https://mp.weixin.qq.com/s/3Vwk4-lX6wjMvPvx-0R43g", analysisUrl: "https://mp.weixin.qq.com/s/Hvxi7YJV9jHuKAJMOcQSaA" },
+        { name: "内蒙古", policyUrl: "https://mp.weixin.qq.com/s/fihwp5Wxd0x_1JYKNd7HxQ", analysisUrl: "https://mp.weixin.qq.com/s/lg3bBV__qYg9aS40T3g8Sw" },
+        { name: "山西", policyUrl: "https://mp.weixin.qq.com/s/Vdr8-kb_j9kE-HDTU_sbww", analysisUrl: "https://mp.weixin.qq.com/s/o7mHVe5jbzujp-xJOvssBQ" },
+        { name: "江苏", policyUrl: "https://mp.weixin.qq.com/s/fVqKwweKasMmVAv2yDpsDg", analysisUrl: "https://mp.weixin.qq.com/s/PRvYGhs3wkmkh07yNGVblQ" }
+      ],
+      B: [
+        { name: "新疆", policyUrl: "https://mp.weixin.qq.com/s/3uKxmF_0T86iDf_5h8d8Gg", analysisUrl: "https://mp.weixin.qq.com/s/AZSSMQI1NOoNlQsaFshdSg" },
+        { name: "安徽", policyUrl: "https://mp.weixin.qq.com/s/H9K_-NX4bfk7KKeglAX1ew", analysisUrl: "https://mp.weixin.qq.com/s/Ubtlq-RmVhbJ_PY-9wZluw" },
+        { name: "浙江", policyUrl: "https://mp.weixin.qq.com/s/-TOUWP0UuEPwAQrvGV9RFQ", analysisUrl: "https://36kr.com/tag/zhejiang-chuneng" },
+        { name: "陕西", policyUrl: "https://mp.weixin.qq.com/s/YAijTSJjlhFy9uq6CNGV6Q", analysisUrl: "https://www.cnesa.org/region/shaanxi.html" },
+        { name: "河南", policyUrl: "https://mp.weixin.qq.com/s/TLOyanO4svnqtFXpK2y8Iw", analysisUrl: "https://mp.weixin.qq.com/s/xq5pDC21DxufkuNmCzP1LA" },
+        { name: "山东", policyUrl: "https://mp.weixin.qq.com/s/TEAqoWS5etGftxi28nAHcw", analysisUrl: "https://mp.weixin.qq.com/s/H8hsHE8nhBIbPYTNi03QJA" }
+      ],
+      C: [
+        { name: "北京", policyUrl: "https://news.bjx.com.cn/html/20241210/1415865.shtml", analysisUrl: "https://mp.weixin.qq.com/s/sVQ_zmN8-x7lMJhKsgtsKw" },
+        { name: "上海", policyUrl: "https://mp.weixin.qq.com/s/xLLsc27rpRAvdQVRQ191BA", analysisUrl: "https://mp.weixin.qq.com/s/t9XcW4gN-68-bqir5nwWSQ" },
+        { name: "天津", policyUrl: "https://mp.weixin.qq.com/s/k4mw1uaxoWviQxGklhxYdA", analysisUrl: "https://mp.weixin.qq.com/s/BJSD9sOWMnG7rVEvVxdUeg" },
+        { name: "重庆", policyUrl: "https://mp.weixin.qq.com/s/rjSM5BMqmYNXigB-91i9lg", analysisUrl: "https://mp.weixin.qq.com/s/O-dt0hA93UtLFNsDoBSGOQ" },
+        { name: "四川", policyUrl: "https://mp.weixin.qq.com/s/uuEJDTWcXdHmWW6kVoOwZg", analysisUrl: "https://mp.weixin.qq.com/s/9iPugd9R0gUjCjarrRZlPA" },
+        { name: "云南", policyUrl: "https://mp.weixin.qq.com/s/ThzaFGayvl3I2I6SEz1l9w", analysisUrl: "https://mp.weixin.qq.com/s/kyaxzypE2AoKFIkFf2Y3eA" },
+        { name: "贵州", policyUrl: "https://mp.weixin.qq.com/s/l-FBu4jE1kLJ2CS0K25uUg", analysisUrl: "https://mp.weixin.qq.com/s/R9ff7bg5ZlBEBnukhYstzw" },
+        { name: "湖南", policyUrl: "https://mp.weixin.qq.com/s/PVJGIxvM0UdhGnHYuUg1iQ?click_id=33", analysisUrl: "https://mp.weixin.qq.com/s/BPX3osPyX9ePNw1lkaCmQg" },
+        { name: "吉林", policyUrl: "https://mp.weixin.qq.com/s/rGPyCR_XHS-ahjyKiB0LNw", analysisUrl: "https://mp.weixin.qq.com/s/7YXHa-epVdj8qO6L2Z7P_Q" },
+        { name: "辽宁", policyUrl: "https://mp.weixin.qq.com/s/bfy3kj6VaQlfZz4QPkOGVQ", analysisUrl: "https://mp.weixin.qq.com/s/1cymEPyulwNeTjsGzHPg9A" },
+        { name: "黑龙江", policyUrl: "https://mp.weixin.qq.com/s/O-1TayHCyQsD4Bdv5mjc9g", analysisUrl: "https://mp.weixin.qq.com/s/o7tT5beRxLSNZPhvL2j9Vg" },
+        { name: "青海", policyUrl: "https://mp.weixin.qq.com/s/oh0CZKM-98EeGdTyuGNfXA", analysisUrl: "https://mp.weixin.qq.com/s/pySw9AR7tHvPcv2UAF3aNQ" },
+        { name: "福建", policyUrl: "https://mp.weixin.qq.com/s/DFZzIvqBQ0b1T4OPSvDRCQ", analysisUrl: "https://www.toutiao.com/article/7457529242490896946/?&source=m_redirect" },
+        { name: "湖北", policyUrl: "https://mp.weixin.qq.com/s/whVZ8m2UrZAVpKStiOUvsA", analysisUrl: "https://mp.weixin.qq.com/s/_i2S24OzJgZw37ai731aYg" },
+        { name: "海南", policyUrl: "https://mp.weixin.qq.com/s/M22mQvTymZAAOP-hj-_vvA", analysisUrl: "https://mp.weixin.qq.com/s/3K-7RZhvo0BcTCsr5NrASw" },
+        { name: "广西", policyUrl: "https://mp.weixin.qq.com/s/fM6Gu5xn_6tTBAeQ5gYxRQ", analysisUrl: "https://mp.weixin.qq.com/s/mQc2HEXctf7PXJEV9XWfJw" },
+        { name: "西藏", policyUrl: "https://mp.weixin.qq.com/s/XppEkPxWHYouh1Rs1lsmHg", analysisUrl: "https://www.163.com/dy/article/J8UJAJ5U05533BYM.html" },
+        { name: "香港", policyUrl: "https://mp.weixin.qq.com/s/gma9FRBFEjIrQTsIuxEH0A", analysisUrl: "https://mp.weixin.qq.com/s/sK-oRWQsXmzW94_xmAnu3w" },
+        { name: "澳门", policyUrl: "https://mp.weixin.qq.com/s/zcjzMyk6lD9LAcSg6LNK9g", analysisUrl: "https://mp.weixin.qq.com/s/v9NmjkJfSb6HKBaCM8dyyw" },
+        { name: "台湾", policyUrl: "https://mp.weixin.qq.com/s/1NqY4pnY_F90b_di9ImFEA", analysisUrl: "https://mp.weixin.qq.com/s/gjjij0jvTs9lXOqUTelu9Q" },
+        { name: "江西", policyUrl: "https://mp.weixin.qq.com/s/dRW7ZJcOf5drV34OaYrdpw", analysisUrl: "https://mp.weixin.qq.com/s/4uG0vKK8K8ISnQdaiyuKGQ" }
+      ]
+    };
+
+    // 获取URL参数中的等级信息
+    function getLevelFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('level') || 'A'; // 默认A级
+    }
+
+    // 页面加载时初始化
+    window.onload = function() {
+      const level = getLevelFromUrl();
+      const title = level === 'A' ? 'A级（优先推荐）省份' :
+                    level === 'B' ? 'B级（重点关注）省份' : 'C级（持续关注）省份';
+      document.getElementById('provinceListTitle').textContent = title;
+      const grid = document.getElementById('provinceGrid');
+      grid.innerHTML = '';
+      // 生成省份按钮
+      provinceData[level].forEach(province => {
+        const btn = document.createElement('div');
+        btn.className = 'bg-white border border-gray-100 rounded-xl p-3 text-center shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col items-center justify-center h-20';
+        btn.innerHTML = `
+          <span class="font-medium text-gray-800">${province.name}</span>
+          <span class="text-xs text-gray-500 mt-1">点击查看</span>
+        `;
+        btn.onclick = () => goToProvinceDetail(province, level);
+        grid.appendChild(btn);
+      });
+    }
+
+    // 跳转到首页
+    function goToHomePage() {
+      window.location.href = 'index.html';
+    }
+
+    // 跳转到省份详情页
+    function goToProvinceDetail(province, level) {
+      const provinceName = encodeURIComponent(province.name);
+      const policyUrl = encodeURIComponent(province.policyUrl);
+      const analysisUrl = encodeURIComponent(province.analysisUrl);
+      window.location.href = `province-detail.html?name=${provinceName}&policyUrl=${policyUrl}&analysisUrl=${analysisUrl}&level=${level}`;
+    }
+  </script>
+</body>
+</html>
